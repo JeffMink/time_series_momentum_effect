@@ -1,0 +1,11 @@
+# Ignore raw data and local databases
+data/
+*.db
+*.csv
+
+# Ignore Python cache & environment files
+__pycache__/
+*.pyc
+.env
+.venv/
+.ipynb_checkpoints/
