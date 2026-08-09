@@ -23,8 +23,15 @@ class MomentumSignalGenerator:
         print(f"Calculating {self.lookback_days}-day momentum signals...")
         momentum=prices_df.pct_change(periods=self.lookback_days)
         signals_array=np.where(momentum> 0, 1, -1)
-        signals_df=pd.DataFrame(signals_array,index=prices_df.index, columns=prices_df.columns)
 
+        """
+        Set NaN to 0 (days that are less than the lookback period). 
+        Otherwise they default to -1. This is better than deleting the rows, as it is 
+        easier to align with dates later on.
+        """
+        signals_array[momentum.isna()] = 0 
+
+        signals_df=pd.DataFrame(signals_array,index=prices_df.index, columns=prices_df.columns)
         return signals_df
 
 
